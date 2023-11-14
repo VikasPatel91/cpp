@@ -1,28 +1,50 @@
-#include <iostream>
+#include <bits/stdc++.h>
+
+#include <cmath>
+
 using namespace std;
-class mathematics
+
+class Icecream
 {
+
 public:
-    int terms;
-    int initialTerm;
-    int commonDifference;
-    mathematics(int n, int it, int cd) : terms(n), initialTerm(it), commonDifference(cd){};
-    void sum()
+    float Quantity(int r)
     {
-        int sum = 0;
-        int num = initialTerm;
-        for (int i = 0; i < terms; i++)
-        {
-            sum = num + sum + commonDifference * i;
-        }
-        cout << sum << endl;
+
+        return r * r * r;
+    }
+
+    float Quantity(int r, int h)
+    {
+
+        return 0.33 * M_PI * r * r * h;
     }
 };
+
 int main()
 {
-    int n, it, cd;
-    cin >> n >> it >> cd;
-    mathematics *obj = new mathematics(n, it, cd);
-    obj->sum();
-    delete obj;
+
+    Icecream obj;
+
+    int i, n, r, h;
+
+    cin >> n;
+
+    if (n == 1)
+    {
+
+        cin >> r;
+
+        cout << fixed << setprecision(2) << obj.Quantity(r);
+    }
+
+    if (n == 2)
+    {
+
+        cin >> r >> h;
+
+        cout << fixed << setprecision(2) << obj.Quantity(r, h);
+    }
+
+    return 0;
 }

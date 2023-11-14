@@ -1,14 +1,46 @@
 #include <iostream>
-#include <iomanip>
 using namespace std;
+class Color
+{
+public:
+    virtual void paint() = 0;
+};
+class RedPaint : public Color
+{
+public:
+    void paint() override
+    {
+        cout << "I'm Painting with Red color." << endl;
+    }
+};
+class BluePaint : public Color
+{
+public:
+    void paint() override
+    {
+        cout << "I'm Painting with Blue color." << endl;
+    }
+};
 int main()
 {
-    double *Rate = new double;
-    double *Amt = new double;
-    cin >> *Rate >> *Amt;
-    double convert;
-    convert = *Rate * *Amt;
-    cout << fixed << setprecision(2) << convert << endl;
-    delete Rate;
-    delete Amt;
+    char choice;
+    std::cin >> choice;
+    Color *paintObject = nullptr;
+    if (choice == 'R' || choice == 'r')
+    {
+        paintObject = new RedPaint();
+    }
+    else if (choice == 'B' || choice == 'b')
+    {
+        paintObject = new BluePaint();
+    }
+    else
+    {
+        std::cout << "Invalid choice!" << std::endl;
+        return 1; // Terminate the program
+    }
+    paintObject->paint();
+    delete paintObject;
+
+    return 0;
 }

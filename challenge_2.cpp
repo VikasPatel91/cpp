@@ -1,62 +1,54 @@
 #include <iostream>
-#include <cmath>
 
-using namespace std;
-
-bool isPrime(int num)
+class CoffeeShop
 {
-    if (num <= 1)
-    {
-        return false;
-    }
+public:
+    virtual float calculateTotal() const = 0;
+    virtual ~CoffeeShop() {}
+};
 
-    for (int i = 2; i <= sqrt(num); ++i)
-    {
-        if (num % i == 0)
-        {
-            return false;
-        }
-    }
+class CustomerOrder : public CoffeeShop
+{
+private:
+    float coffeePrice, teaPrice, pastryPrice;
+    int coffeeQuantity, teaQuantity, pastryQuantity;
 
-    return true;
-}
+public:
+    CustomerOrder(float cPrice, int cQuantity, float tPrice, int tQuantity, float pPrice, int pQuantity)
+        : coffeePrice(cPrice), teaPrice(tPrice), pastryPrice(pPrice), coffeeQuantity(cQuantity), teaQuantity(tQuantity), pastryQuantity(pQuantity) {}
+
+    float calculateTotal() const override
+    {
+        float coffeeCost = coffeePrice * coffeeQuantity;
+        float teaCost = teaPrice * teaQuantity;
+        float pastryCost = pastryPrice * pastryQuantity;
+
+        return coffeeCost + teaCost + pastryCost;
+    }
+};
 
 int main()
 {
-    int n;
-    cin >> n;
+    float coffeePrice, teaPrice, pastryPrice;
+    int coffeeQuantity, teaQuantity, pastryQuantity;
 
-    if (n < 2)
-    {
-        cout << "No prime factors found for " << n << endl;
-        return 0;
-    }
+    // Input for coffee
+    std::cin >> coffeePrice >> coffeeQuantity;
 
-    int *primeFactors = new int[n];
-    int count = 0;
+    // Input for tea
+    std::cin >> teaPrice >> teaQuantity;
 
-    cout << "Prime factors of " << n << " are: ";
-    for (int i = 2; i <= n; ++i)
-    {
-        if (n % i == 0 && isPrime(i))
-        {
-            primeFactors[count++] = i;
-            cout << i << " ";
-        }
-    }
+    // Input for pastry
+    std::cin >> pastryPrice >> pastryQuantity;
 
-    cout << "\nLargest prime factor of " << n << " is: ";
-    if (count > 0)
-    {
-        int largestPrimeFactor = primeFactors[count - 1];
-        cout << largestPrimeFactor << endl;
-    }
-    else
-    {
-        cout << "No prime factors found for " << n << endl;
-    }
+    // Create CustomerOrder object
+    CoffeeShop *order = new CustomerOrder(coffeePrice, coffeeQuantity, teaPrice, teaQuantity, pastryPrice, pastryQuantity);
 
-    delete[] primeFactors; // Release dynamically allocated memory
+    // Calculate and display total cost
+    std::cout << "Total cost of the order is $" << order->calculateTotal() << std::endl;
+
+    // Clean up dynamically allocated memory
+    delete order;
 
     return 0;
 }
